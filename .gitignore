@@ -1,0 +1,6 @@
+# Ignore all files in the directory
+/*
+
+# Except for .init.el
+!.init.el
+!.gitignore
