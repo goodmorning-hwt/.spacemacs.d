@@ -3,4 +3,5 @@
 
 # Except for .init.el
 !.init.el
+!.spacemacs.env
 !.gitignore
