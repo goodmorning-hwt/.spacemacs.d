@@ -52,6 +52,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      helm
+     nixos
      lsp
      markdown
      multiple-cursors
