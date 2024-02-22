@@ -4,7 +4,7 @@
 
                                         ; System information
 (defun my/rmbp2018 ()
-  (equal (system-name) "hewentaodeMacBookPro.local"))
+  (equal (system-name) "hewentaodeMacBook-Pro.local"))
 (defun my/ubuntu-vm-science ()
   (equal (system-name) "hwt-virtual-machine"))
 (defun my/nixos-vm ()
@@ -42,13 +42,21 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(python
+     (latex :variables
+            latex-refresh-preview t
+            latex-backend 'lsp
+            )
+     (go :variables go-backend 'lsp)
+     chinese
+
+
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
+     auto-completion
+     better-defaults
      emacs-lisp
      git
      helm
@@ -64,7 +72,6 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      treemacs
-     go
      c-c++
      ipython-notebook
      )
@@ -288,7 +295,7 @@ It should only modify the values of Spacemacs settings."
 
                                (if (my/rmbp2018)
                                    '("JetBrainsMono Nerd Font"
-                               :size 10.0
+                               :size 20.0
                                :weight normal
                                :width normal
                                )
@@ -299,7 +306,7 @@ It should only modify the values of Spacemacs settings."
                                        :weight normal
                                        :width normal
                                        )
-                                 '("Ubuntu Mono"
+                                   '("JetBrainsMono Nerd Font"
                                    :size 20.0
                                    :weight normal
                                    :width normal
