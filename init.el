@@ -9,11 +9,12 @@
   (equal (system-name) "hwt-virtual-machine"))
 (defun my/nixos-vm ()
   (equal (system-name) "nixos"))
-
+(defun my/rmbp2018EndeavourOS ()
+  (equal (system-name) "rmbp2018EndeavourOS"))
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
-This function should only modify configuration layer settings."
+This function should only modify configuration layer settings." ;
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -88,8 +89,16 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(
                                       (copilot :location (recipe
                                                           :fetcher github
-                                                          :repo "copilot-emacs/copilot.el"
+                                                          :repo "zerolfx/copilot.el"
                                                           :files ("*.el" "dist")))
+                                      (chatgpt :location (recipe
+                                                          :fetcher github
+                                                          :repo "joshcho/ChatGPT.el"))
+
+                                      ;; (copilot :location (recipe
+                                      ;;                     :fetcher github
+                                      ;;                     :repo "copilot-emacs/copilot.el"
+                                      ;;                     :files ("*.el" "dist")))
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -306,12 +315,21 @@ It should only modify the values of Spacemacs settings."
                                        :weight normal
                                        :width normal
                                        )
-                                   '("JetBrainsMono Nerd Font"
-                                   :size 20.0
-                                   :weight normal
-                                   :width normal
-                                   )
-                                 )))
+
+                                   (if (my/rmbp2018EndeavourOS)
+                                       '("JetBrainsMono Nerd Font"
+                                         :size 15.0
+                                         :weight normal
+                                         :width normal
+                                         )
+
+                                     '("JetBrainsMono Nerd Font"
+                                       :size 15.0
+                                       :weight normal
+                                       :width normal
+                                       )
+
+                                 ))))
    ;; (my/ubuntu-vm-science)
 
    ;; The leader key (default "SPC")
@@ -625,9 +643,11 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (define-key evil-normal-state-map (kbd "M-s M-s") #'save-buffer)
+  (require 'python)
+  (setq chatgpt-repo-path (expand-file-name "chatgpt/" quelpa-build-dir))
+  (global-set-key (kbd "C-c q") #'chatgpt-query)
 
-  ;; copilot
-  ;; accept completion from copilot and fallback to company
   (with-eval-after-load 'company
     ;; disable inline previews
     (delq 'company-preview-if-just-one-frontend company-frontends))
@@ -639,6 +659,9 @@ before packages are loaded."
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
 
   (add-hook 'prog-mode-hook 'copilot-mode)
+
+
+
 )
 
 
