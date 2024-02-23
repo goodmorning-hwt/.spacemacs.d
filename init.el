@@ -42,7 +42,8 @@ This function should only modify configuration layer settings." ;
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(python
+   '(vimscript
+     python
      (latex :variables
             latex-refresh-preview t
             latex-backend 'lsp
@@ -87,18 +88,22 @@ This function should only modify configuration layer settings." ;
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
-                                      (copilot :location (recipe
-                                                          :fetcher github
-                                                          :repo "zerolfx/copilot.el"
-                                                          :files ("*.el" "dist")))
-                                      (chatgpt :location (recipe
-                                                          :fetcher github
-                                                          :repo "joshcho/ChatGPT.el"))
-
                                       ;; (copilot :location (recipe
                                       ;;                     :fetcher github
-                                      ;;                     :repo "copilot-emacs/copilot.el"
+                                      ;;                     :repo "zerolfx/copilot.el"
                                       ;;                     :files ("*.el" "dist")))
+                                      ;; (chatgpt :location (recipe
+                                      ;;                     :fetcher github
+                                      ;;                     :repo "joshcho/ChatGPT.el"))
+                                      (copilot :location (recipe
+                                                          :fetcher github
+                                                          :repo "copilot-emacs/copilot.el"
+                                                          :files ("*.el" "dist")
+                                                          :hook
+                                                          (prog-mode . copilot-mode)
+                                                          (emacs-lisp-mode . (lambda ()
+                                                                               (setq-local copilot--indent-warning-printed-p t)))
+                                                          ))
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -115,6 +120,7 @@ This function should only modify configuration layer settings." ;
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only))
+
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -643,10 +649,17 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (define-key evil-normal-state-map (kbd "M-s M-s") #'save-buffer)
-  (require 'python)
-  (setq chatgpt-repo-path (expand-file-name "chatgpt/" quelpa-build-dir))
-  (global-set-key (kbd "C-c q") #'chatgpt-query)
+
+
+  ;; (with-eval-after-load 'copilot
+  ;;   (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+  ;;   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+  ;;   (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
+  ;;   (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
+
+  ;; (add-hook 'prog-mode-hook 'copilot-mode)
+
+  ;; accept completion from copilot and fallback to company
 
   (with-eval-after-load 'company
     ;; disable inline previews
@@ -659,14 +672,15 @@ before packages are loaded."
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
 
   (add-hook 'prog-mode-hook 'copilot-mode)
-
-
+  (setq copilot-indent-offset-warning-disable t)
+  ;; I find these in the source code of copilot.el
 
 )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
