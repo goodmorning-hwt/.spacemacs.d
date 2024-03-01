@@ -317,7 +317,7 @@ It should only modify the values of Spacemacs settings."
 
                                  (if (my/nixos-vm)
                                      '("DejaVu Sans Mono"
-                                       :size 15.0
+                                       :size 20.0
                                        :weight normal
                                        :width normal
                                        )
