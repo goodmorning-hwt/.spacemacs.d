@@ -12,6 +12,9 @@
 (defun my/rmbp2018EndeavourOS ()
   (equal (system-name) "rmbp2018EndeavourOS"))
 
+(defun use-copilot()
+  (or (my/nixos-vm) (my/rmbp2018)))
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings." ;
@@ -88,13 +91,7 @@ This function should only modify configuration layer settings." ;
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
-                                      ;; (copilot :location (recipe
-                                      ;;                     :fetcher github
-                                      ;;                     :repo "zerolfx/copilot.el"
-                                      ;;                     :files ("*.el" "dist")))
-                                      ;; (chatgpt :location (recipe
-                                      ;;                     :fetcher github
-                                      ;;                     :repo "joshcho/ChatGPT.el"))
+
                                       (copilot :location (recipe
                                                           :fetcher github
                                                           :repo "copilot-emacs/copilot.el"
@@ -649,6 +646,11 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
+  ;; toggle transparency
+  (spacemacs/enable-background-transparency)
+  (spacemacs/decrease-transparency)
+  (spacemacs/decrease-transparency)
 
 
   ;; (with-eval-after-load 'copilot
