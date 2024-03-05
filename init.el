@@ -53,8 +53,16 @@ This function should only modify configuration layer settings." ;
             latex-refresh-preview t
             latex-backend 'lsp
             )
-     (go :variables go-backend 'lsp)
+     (go :variables
+         go-backend 'lsp
+         ;; if you use lsp, do this shell command: GO111MODULE=on go install golang.org/x/tools/gopls@latest
+         go-tab-width 4
+         go-format-before-save t
+         gofmt-command "goimports"
+         go-use-golangci-lint t
+         )
      chinese
+     spacemacs-editing
 
 
      ;; ----------------------------------------------------------------
@@ -632,7 +640,13 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-)
+
+(setq configuration-layer-elpa-archives
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+
+       )
 
 
 (defun dotspacemacs/user-load ()
@@ -640,7 +654,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
-)
+  )
 
 
 (defun dotspacemacs/user-config ()
@@ -650,10 +664,15 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+
   ;; toggle transparency
   (spacemacs/enable-background-transparency)
-  (spacemacs/decrease-transparency)
-  (spacemacs/decrease-transparency)
+  ;; (spacemacs/decrease-transparency)
+  ;; (spacemacs/decrease-transparency)
+  (spacemacs/increase-background-transparency)
+  (spacemacs/increase-background-transparency)
+  (spacemacs/increase-background-transparency)
+  (spacemacs/increase-background-transparency)
 
 
   ;; (with-eval-after-load 'copilot
