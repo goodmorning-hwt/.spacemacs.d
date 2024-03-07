@@ -52,6 +52,8 @@ This function should only modify configuration layer settings." ;
      (latex :variables
             latex-refresh-preview t
             latex-backend 'lsp
+            latex-view-with-pdf-tools nil
+            latex-build-engine 'xetex
             )
      (go :variables
          go-backend 'lsp
@@ -73,7 +75,10 @@ This function should only modify configuration layer settings." ;
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t
+                      )
      better-defaults
      emacs-lisp
      git
