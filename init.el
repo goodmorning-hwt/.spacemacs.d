@@ -56,10 +56,13 @@ This function should only modify configuration layer settings." ;
      (go :variables
          go-backend 'lsp
          ;; if you use lsp, do this shell command: GO111MODULE=on go install golang.org/x/tools/gopls@latest
+         ;; go-backend 'go-mode
+         ;; godoc-at-point-function 'godoc-gogetdoc
+
          go-tab-width 4
          go-format-before-save t
          gofmt-command "goimports"
-         go-use-golangci-lint t
+         ;; go-use-golangci-lint t
          )
      chinese
      spacemacs-editing
@@ -80,7 +83,16 @@ This function should only modify configuration layer settings." ;
      markdown
      multiple-cursors
      (org :variables
-          org-enable-hugo-support t)
+          org-enable-hugo-support t
+          org-enable-github-support t
+          org-enable-org-journal-support t
+          org-journal-dir "~/Documents/SynologyDrive/org/journal/"
+          org-journal-file-format "%Y-%m-%d"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
+          org-journal-time-prefix "* "
+          org-journal-time-format ""
+          )
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -674,16 +686,20 @@ before packages are loaded."
   (spacemacs/increase-background-transparency)
   (spacemacs/increase-background-transparency)
 
+  
+  ;; org mode config
+  (with-eval-after-load 'org
+    ;; here goes your Org config :)
+    (add-to-list 'org-modules 'org-protocol)
+    (setq org-capture-templates
+          `(("c" "Captured" entry (file ,(concat my/sync-folder "capture.org"))
+             "* %t %:description\nlink: %l \n\n%i\n" :prepend t :empty-lines-after 1)
+            ("n" "Captured Now!" entry (file ,(concat my/sync-folder "capture.org"))
+             "* %t %:description\nlink: %l \n\n%i\n" :prepend t :emptry-lines-after 1 :immediate-finish t)
+            )
+          )
+    )
 
-  ;; (with-eval-after-load 'copilot
-  ;;   (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-  ;;   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-  ;;   (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
-  ;;   (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
-
-  ;; (add-hook 'prog-mode-hook 'copilot-mode)
-
-  ;; accept completion from copilot and fallback to company
 
   (with-eval-after-load 'company
     ;; disable inline previews
