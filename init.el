@@ -11,6 +11,8 @@
   (equal (system-name) "nixos"))
 (defun my/rmbp2018EndeavourOS ()
   (equal (system-name) "rmbp2018EndeavourOS"))
+(defun my/ubuntu13700KF ()
+  (equal (system-name) "hwtubuntu-13700KF"))
 
 (defun use-copilot()
   (or (my/nixos-vm) (my/rmbp2018)))
@@ -342,7 +344,7 @@ It should only modify the values of Spacemacs settings."
                                :width normal
                                )
 
-                               (if (my/rmbp2018)
+                               (if (or (my/ubuntu13700KF) (my/rmbp2018))
                                    '("JetBrainsMono Nerd Font"
                                :size 20.0
                                :weight normal
