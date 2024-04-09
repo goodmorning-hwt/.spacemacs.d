@@ -71,7 +71,6 @@ This function should only modify configuration layer settings." ;
          ;; if you use lsp, do this shell command: GO111MODULE=on go install golang.org/x/tools/gopls@latest
          ;; go-backend 'go-mode
          ;; godoc-at-point-function 'godoc-gogetdoc
-
          go-tab-width 4
          go-format-before-save t
          gofmt-command "goimports"
