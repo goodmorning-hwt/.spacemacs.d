@@ -47,7 +47,7 @@ This function should only modify configuration layer settings." ;
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(octave
      typescript
      javascript
      (html :variables
@@ -128,18 +128,11 @@ This function should only modify configuration layer settings." ;
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(
+   dotspacemacs-additional-packages  '((copilot :location (recipe
+                                                           :fetcher github
+                                                           :repo "copilot-emacs/copilot.el"
+                                                           :files ("*.el"))))
 
-                                      (copilot :location (recipe
-                                                          :fetcher github
-                                                          :repo "copilot-emacs/copilot.el"
-                                                          :files ("*.el" "dist")
-                                                          :hook
-                                                          (prog-mode . copilot-mode)
-                                                          (emacs-lisp-mode . (lambda ()
-                                                                               (setq-local copilot--indent-warning-printed-p t)))
-                                                          ))
-                                      )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -716,10 +709,11 @@ before packages are loaded."
     )
 
 
+
   (with-eval-after-load 'company
     ;; disable inline previews
     (delq 'company-preview-if-just-one-frontend company-frontends))
-
+  
   (with-eval-after-load 'copilot
     (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
@@ -727,8 +721,7 @@ before packages are loaded."
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
 
   (add-hook 'prog-mode-hook 'copilot-mode)
-  (setq copilot-indent-offset-warning-disable t)
-  ;; I find these in the source code of copilot.el
+
 
 )
 
