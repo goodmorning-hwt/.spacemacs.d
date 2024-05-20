@@ -14,8 +14,14 @@
 (defun my/ubuntu13700KF ()
   (equal (system-name) "hwtubuntu-13700KF"))
 
-(defun use-copilot()
-  (or (my/nixos-vm) (my/rmbp2018)))
+(defun my/disable-copilot-mode ()
+  "Disable copilot mode."
+  (copilot-mode -1))
+
+(defun my/enable-copilot-mode ()
+  "Enable copilot mode."
+  (copilot-mode 1))
+
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -60,6 +66,7 @@ This function should only modify configuration layer settings." ;
      rust
      vimscript
      python
+     org
      (latex :variables
             latex-refresh-preview t
             latex-backend 'lsp
@@ -115,7 +122,13 @@ This function should only modify configuration layer settings." ;
      syntax-checking
      version-control
      treemacs
-     c-c++
+     (c-c++ :variables
+            c-c++-backend 'lsp-clangd
+            ;; c-c++-backend 'lsp-ccls
+            c-c++-enable-google-style t
+            c-c++-enable-google-newline t
+
+            )
      ipython-notebook
      )
 
@@ -131,7 +144,14 @@ This function should only modify configuration layer settings." ;
    dotspacemacs-additional-packages  '((copilot :location (recipe
                                                            :fetcher github
                                                            :repo "copilot-emacs/copilot.el"
-                                                           :files ("*.el"))))
+                                                           :files ("*.el")))
+
+                                       (lean4-mode :location(recipe
+                                                             :fetcher github
+                                                             :repo "leanprover/lean4-mode"
+                                                             :files ("*.el" "data")))
+
+                                       )
 
 
    ;; A list of packages that cannot be updated.
@@ -684,7 +704,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-
+	(add-hook 'prog-mode-hook 'my/disable-copilot-mode)
+  (add-hook 'latex-mode-hook 'my/enable-copilot-mode)
   ;; toggle transparency
   (spacemacs/enable-background-transparency)
   ;; (spacemacs/decrease-transparency)
@@ -723,6 +744,7 @@ before packages are loaded."
   (add-hook 'prog-mode-hook 'copilot-mode)
 
 
+(put 'narrow-to-page 'disabled nil)
 )
 
 
