@@ -22,6 +22,9 @@
   "Enable copilot mode."
   (copilot-mode 1))
 
+(defun my/enable-cdlatex-mode ()
+  "Enable copilot mode."
+  (cdlatex-mode 1))
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -150,6 +153,12 @@ This function should only modify configuration layer settings." ;
                                                              :fetcher github
                                                              :repo "leanprover/lean4-mode"
                                                              :files ("*.el" "data")))
+
+                                       (cdlatex :location(recipe
+                                                             :fetcher github
+                                                             :repo "cdominik/cdlatex"
+                                                             :files ("*.el" "Makefile")))
+
 
                                        )
 
@@ -706,6 +715,9 @@ before packages are loaded."
 
 	(add-hook 'prog-mode-hook 'my/disable-copilot-mode)
   (add-hook 'latex-mode-hook 'my/enable-copilot-mode)
+  (add-hook 'latex-mode-hook 'my/enable-cdlatex-mode)
+
+
   ;; toggle transparency
   (spacemacs/enable-background-transparency)
   ;; (spacemacs/decrease-transparency)
