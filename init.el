@@ -276,6 +276,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
+   ;; dotspacemacs-startup-banner '"~/.spacemacs.d/GNUEmacs.png" 
    dotspacemacs-startup-banner 'official
 
    ;; Scale factor controls the scaling (size) of the startup banner. Default
@@ -284,6 +285,7 @@ It should only modify the values of Spacemacs settings."
    ;; heights. If set to a number (int or float) it is used as a constant
    ;; scaling factor for the default logo size.
    dotspacemacs-startup-banner-scale 'auto
+   ;; dotspacemacs-startup-banner-scale '1
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -712,6 +714,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
 
 	(add-hook 'prog-mode-hook 'my/disable-copilot-mode)
   (add-hook 'latex-mode-hook 'my/enable-copilot-mode)
