@@ -77,7 +77,6 @@ This function should only modify configuration layer settings." ;
              python-format-on-save t
              python-save-before-test t
       )
-     org
      (latex :variables
             latex-refresh-preview t
             latex-backend 'lsp
@@ -740,26 +739,14 @@ before packages are loaded."
   (spacemacs/increase-background-transparency)
   (spacemacs/increase-background-transparency)
 
-  
-  ;; org mode config
-  (with-eval-after-load 'org
-    ;; here goes your Org config :)
-    (add-to-list 'org-modules 'org-protocol)
-    (setq org-capture-templates
-          `(("c" "Captured" entry (file ,(concat my/sync-folder "capture.org"))
-             "* %t %:description\nlink: %l \n\n%i\n" :prepend t :empty-lines-after 1)
-            ("n" "Captured Now!" entry (file ,(concat my/sync-folder "capture.org"))
-             "* %t %:description\nlink: %l \n\n%i\n" :prepend t :emptry-lines-after 1 :immediate-finish t)
-            )
-          )
-    )
+
 
 
 
   (with-eval-after-load 'company
     ;; disable inline previews
     (delq 'company-preview-if-just-one-frontend company-frontends))
-  
+
   (with-eval-after-load 'copilot
     (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
