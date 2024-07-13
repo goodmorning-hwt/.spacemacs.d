@@ -65,10 +65,18 @@ This function should only modify configuration layer settings." ;
            scss-enable-lsp t
            html-enable-lsp t
       )
+     fasd
+     dap
+     debug
+     conda
      yaml
      rust
      vimscript
-     python
+     (python :variables
+             python-backend 'anaconda
+             python-format-on-save t
+             python-save-before-test t
+      )
      org
      (latex :variables
             latex-refresh-preview t
@@ -103,7 +111,7 @@ This function should only modify configuration layer settings." ;
      emacs-lisp
      git
      helm
-     nixos
+     (nixos :variables nixos-format-on-save t)
      lsp
      markdown
      multiple-cursors
@@ -130,7 +138,7 @@ This function should only modify configuration layer settings." ;
             ;; c-c++-backend 'lsp-ccls
             c-c++-enable-google-style t
             c-c++-enable-google-newline t
-
+            c-c++-enable-clang-format-on-save t
             )
      ipython-notebook
      )
@@ -714,6 +722,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
+  (setenv "PYTHONPATH" "/opt/ros/noetic/lib/python3/dist-packages")
 
 
 	(add-hook 'prog-mode-hook 'my/disable-copilot-mode)
