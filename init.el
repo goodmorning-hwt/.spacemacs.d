@@ -74,6 +74,7 @@ This function should only modify configuration layer settings." ;
      vimscript
      (python :variables
              python-backend 'anaconda
+             python-formatter 'yapf
              python-format-on-save t
              python-save-before-test t
       )
@@ -135,9 +136,17 @@ This function should only modify configuration layer settings." ;
      (c-c++ :variables
             c-c++-backend 'lsp-clangd
             ;; c-c++-backend 'lsp-ccls
-            c-c++-enable-google-style t
-            c-c++-enable-google-newline t
+            ;; c-c++-enable-google-style t
+            c-c++-lsp-enable-semantic-highlight 'rainbow
+            c-c++-lsp-semantic-highlight-method 'overlay
+            ;; 2.4
             c-c++-enable-clang-format-on-save t
+            ;; c-c++-enable-google-style t
+            ;; c-c++-enable-google-newline t
+            c-c++-enable-auto-newline t
+            c-c++-adopt-subprojects t
+            ;; c-c++-dap-adapters '(dap-gdb-lldb dap-lldb dap-cpptools)
+            c-c++-dap-adapters '(dap-cpptools)
             )
      ipython-notebook
      )
@@ -724,6 +733,7 @@ before packages are loaded."
 
   (setenv "PYTHONPATH" "/opt/ros/noetic/lib/python3/dist-packages")
 
+  (require 'dap-cpptools)
 
 	(add-hook 'prog-mode-hook 'my/disable-copilot-mode)
   (add-hook 'latex-mode-hook 'my/enable-copilot-mode)
