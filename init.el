@@ -57,6 +57,7 @@ This function should only modify configuration layer settings." ;
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(octave
+     lua
      typescript
      javascript
      (html :variables
@@ -405,7 +406,7 @@ It should only modify the values of Spacemacs settings."
                                          )
 
                                      '("JetBrainsMono Nerd Font"
-                                       :size 15.0
+                                       :size 20.0
                                        :weight normal
                                        :width normal
                                        )
@@ -741,13 +742,11 @@ before packages are loaded."
 
 
   ;; toggle transparency
-  (spacemacs/enable-background-transparency)
-  ;; (spacemacs/decrease-transparency)
-  ;; (spacemacs/decrease-transparency)
-  (spacemacs/increase-background-transparency)
-  (spacemacs/increase-background-transparency)
-  (spacemacs/increase-background-transparency)
-  (spacemacs/increase-background-transparency)
+  ;; (spacemacs/enable-background-transparency)
+  ;; (spacemacs/increase-background-transparency)
+  ;; (spacemacs/increase-background-transparency)
+  ;; (spacemacs/increase-background-transparency)
+  ;; (spacemacs/increase-background-transparency)
 
 
 
