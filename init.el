@@ -65,7 +65,7 @@ This function should only modify configuration layer settings." ;
            less-enable-lsp t
            scss-enable-lsp t
            html-enable-lsp t
-      )
+           )
      fasd
      dap
      debug
@@ -73,12 +73,15 @@ This function should only modify configuration layer settings." ;
      yaml
      rust
      vimscript
+     (scheme :variables
+             scheme-implementations '(guile))
+     sql
      (python :variables
              python-backend 'anaconda
              python-formatter 'yapf
              python-format-on-save t
              python-save-before-test t
-      )
+             )
      (latex :variables
             latex-refresh-preview t
             latex-backend 'lsp
@@ -172,9 +175,9 @@ This function should only modify configuration layer settings." ;
                                                              :files ("*.el" "data")))
 
                                        (cdlatex :location(recipe
-                                                             :fetcher github
-                                                             :repo "cdominik/cdlatex"
-                                                             :files ("*.el" "Makefile")))
+                                                          :fetcher github
+                                                          :repo "cdominik/cdlatex"
+                                                          :files ("*.el" "Makefile")))
 
 
                                        )
@@ -293,7 +296,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   ;; dotspacemacs-startup-banner '"~/.spacemacs.d/GNUEmacs.png" 
+   ;; dotspacemacs-startup-banner '"~/.spacemacs.d/GNUEmacs.png"
    dotspacemacs-startup-banner 'official
 
    ;; Scale factor controls the scaling (size) of the startup banner. Default
@@ -379,17 +382,17 @@ It should only modify the values of Spacemacs settings."
 
    dotspacemacs-default-font (if (my/ubuntu-vm-science)
                                  '("Ubuntu Mono"
-                               :size 15.0
-                               :weight normal
-                               :width normal
-                               )
+                                   :size 15.0
+                                   :weight normal
+                                   :width normal
+                                   )
 
                                (if (or (my/ubuntu13700KF) (my/rmbp2018))
                                    '("JetBrainsMono Nerd Font"
-                               :size 20.0
-                               :weight normal
-                               :width normal
-                               )
+                                     :size 20.0
+                                     :weight normal
+                                     :width normal
+                                     )
 
                                  (if (my/nixos-vm)
                                      '("DejaVu Sans Mono"
@@ -406,12 +409,12 @@ It should only modify the values of Spacemacs settings."
                                          )
 
                                      '("JetBrainsMono Nerd Font"
-                                       :size 20.0
+                                       :size 15.0
                                        :weight normal
                                        :width normal
                                        )
 
-                                 ))))
+                                     ))))
    ;; (my/ubuntu-vm-science)
 
    ;; The leader key (default "SPC")
@@ -700,7 +703,7 @@ default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
   (spacemacs/load-spacemacs-env)
-)
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -709,12 +712,12 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-;; (setq configuration-layer-elpa-archives
-;;     '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-;;       ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-;;       ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+  ;; (setq configuration-layer-elpa-archives
+  ;;     '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+  ;;       ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+  ;;       ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 
-       )
+  )
 
 
 (defun dotspacemacs/user-load ()
@@ -732,11 +735,13 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  (setenv "PATH" (concat "$HOME/.nix-profile/bin:" (getenv "PATH")))
+
   (setenv "PYTHONPATH" "/opt/ros/noetic/lib/python3/dist-packages")
 
   (require 'dap-cpptools)
 
-	(add-hook 'prog-mode-hook 'my/disable-copilot-mode)
+  (add-hook 'prog-mode-hook 'my/disable-copilot-mode)
   (add-hook 'latex-mode-hook 'my/enable-copilot-mode)
   (add-hook 'latex-mode-hook 'my/enable-cdlatex-mode)
 
@@ -765,8 +770,8 @@ before packages are loaded."
   (add-hook 'prog-mode-hook 'copilot-mode)
 
 
-(put 'narrow-to-page 'disabled nil)
-)
+  (put 'narrow-to-page 'disabled nil)
+  )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -777,18 +782,18 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil)
- '(package-selected-packages
-   '(add-node-modules-path import-js grizzl js-doc js2-refactor multiple-cursors livid-mode nodejs-repl npm-mode skewer-mode js2-mode tern yaml-mode ron-mode rustic rust-mode toml-mode blacken code-cells company-anaconda anaconda-mode counsel-gtags counsel swiper ivy cython-mode dap-mode lsp-docker bui ggtags helm-cscope helm-pydoc importmagic epc ctable concurrent deferred live-py-mode lsp-pyright lsp-python-ms nose pip-requirements pipenv load-env-vars pippel poetry py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv sphinx-doc stickyfunc-enhance xcscope yapfify cmake-mode yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here term-cursor symon symbol-overlay string-inflection string-edit-at-point spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline space-doc smeargle shell-pop restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-vterm multi-term multi-line markdown-toc macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-git-grep helm-descbinds helm-company helm-comint helm-c-yasnippet helm-ag google-translate golden-ratio gitignore-templates git-timemachine git-modes git-messenger git-link gh-md forge flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish diff-hl devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons aggressive-indent ace-link ace-jump-helm-line)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(evil-want-Y-yank-to-eol nil)
+   '(package-selected-packages
+     '(add-node-modules-path import-js grizzl js-doc js2-refactor multiple-cursors livid-mode nodejs-repl npm-mode skewer-mode js2-mode tern yaml-mode ron-mode rustic rust-mode toml-mode blacken code-cells company-anaconda anaconda-mode counsel-gtags counsel swiper ivy cython-mode dap-mode lsp-docker bui ggtags helm-cscope helm-pydoc importmagic epc ctable concurrent deferred live-py-mode lsp-pyright lsp-python-ms nose pip-requirements pipenv load-env-vars pippel poetry py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv sphinx-doc stickyfunc-enhance xcscope yapfify cmake-mode yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here term-cursor symon symbol-overlay string-inflection string-edit-at-point spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline space-doc smeargle shell-pop restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-vterm multi-term multi-line markdown-toc macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-git-grep helm-descbinds helm-company helm-comint helm-c-yasnippet helm-ag google-translate golden-ratio gitignore-templates git-timemachine git-modes git-messenger git-link gh-md forge flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish diff-hl devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons aggressive-indent ace-link ace-jump-helm-line)))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )
