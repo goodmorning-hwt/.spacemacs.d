@@ -50,9 +50,25 @@ This function should only modify configuration layer settings."
              python-fill-column 120
              python-sort-imports-on-save t
              )
+     (shell-scripts :variables
+                      shell-scripts-backend 'lsp
+                      shell-scripts-format-on-save t
+                      )
+
+     (latex :variables
+                      latex-backend 'lsp
+                      latex-format-on-save t
+                      latex-build-engine 'xetex
+                      )
+     (go :variables
+         go-backend 'lsp
+         go-tab-width 4
+         go-format-before-save t
+         )
      git
      helm
      lsp
+     dap
      markdown
      multiple-cursors
      ;; org
@@ -78,6 +94,11 @@ This function should only modify configuration layer settings."
                                                           :fetcher github
                                                           :repo "copilot-emacs/copilot.el"
                                                           :files ("*.el")))
+                                      (cdlatex :location(recipe
+                                                         :fetcher github
+                                                         :repo "cdominik/cdlatex"
+                                                         :files ("*.el" "Makefile")))
+
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -184,7 +205,8 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   ;; dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner "~/.spacemacs.d/GNUEmacs.png"
 
    ;; Scale factor controls the scaling (size) of the startup banner. Default
    ;; value is `auto' for scaling the logo automatically to fit all buffer
