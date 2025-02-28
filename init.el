@@ -2,33 +2,9 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
-                                        ; System information
-(defun my/rmbp2018 ()
-  (equal (system-name) "hewentaodeMacBook-Pro.local"))
-(defun my/ubuntu-vm-science ()
-  (equal (system-name) "hwt-virtual-machine"))
-(defun my/nixos-vm ()
-  (equal (system-name) "nixos"))
-(defun my/rmbp2018EndeavourOS ()
-  (equal (system-name) "rmbp2018EndeavourOS"))
-(defun my/ubuntu13700KF ()
-  (equal (system-name) "hwtubuntu-13700KF"))
-
-(defun my/disable-copilot-mode ()
-  "Disable copilot mode."
-  (copilot-mode -1))
-
-(defun my/enable-copilot-mode ()
-  "Enable copilot mode."
-  (copilot-mode 1))
-
-(defun my/enable-cdlatex-mode ()
-  "Enable copilot mode."
-  (cdlatex-mode 1))
-
 (defun dotspacemacs/layers ()
   "Layer configuration:
-This function should only modify configuration layer settings." ;
+This function should only modify configuration layer settings."
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -56,104 +32,37 @@ This function should only modify configuration layer settings." ;
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(octave
-     lua
-     typescript
-     javascript
-     (html :variables
-           css-enable-lsp t
-           less-enable-lsp t
-           scss-enable-lsp t
-           html-enable-lsp t
-           )
-     fasd
-     dap
-     debug
-     conda
-     yaml
-     rust
-     vimscript
-     (scheme :variables
-             scheme-implementations '(guile))
-     sql
-     (python :variables
-             python-backend 'anaconda
-             python-formatter 'yapf
-             python-format-on-save t
-             python-save-before-test t
-             )
-     (latex :variables
-            latex-refresh-preview t
-            latex-backend 'lsp
-            latex-view-with-pdf-tools nil
-            latex-build-engine 'xetex
-            )
-     (go :variables
-         go-backend 'lsp
-         ;; if you use lsp, do this shell command: GO111MODULE=on go install golang.org/x/tools/gopls@latest
-         ;; go-backend 'go-mode
-         ;; godoc-at-point-function 'godoc-gogetdoc
-         go-tab-width 4
-         go-format-before-save t
-         gofmt-command "goimports"
-         ;; go-use-golangci-lint t
-         )
-     chinese
-     spacemacs-editing
-
-
+   '(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     (auto-completion :variables
-                      auto-completion-enable-snippets-in-popup t
-                      auto-completion-enable-sort-by-usage t
-                      )
+     auto-completion
      better-defaults
-     emacs-lisp
+     ;; emacs-lisp
+     (nixos :variables
+            nix-backend 'lsp
+            nixos-format-on-save t)
+     (python :variables
+             python-format-on-save t
+             python-backend 'lsp
+             python-fill-column 120
+             python-sort-imports-on-save t
+             )
      git
      helm
-     (nixos :variables nixos-format-on-save t)
      lsp
      markdown
      multiple-cursors
-     (org :variables
-          org-enable-hugo-support t
-          org-enable-github-support t
-          org-enable-org-journal-support t
-          org-journal-dir "~/Documents/SynologyDrive/org/journal/"
-          org-journal-file-format "%Y-%m-%d"
-          org-journal-date-prefix "#+TITLE: "
-          org-journal-date-format "%A, %B %d %Y"
-          org-journal-time-prefix "* "
-          org-journal-time-format ""
-          )
+     ;; org
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     ;; spell-checking
      syntax-checking
-     version-control
-     treemacs
-     (c-c++ :variables
-            c-c++-backend 'lsp-clangd
-            ;; c-c++-backend 'lsp-ccls
-            ;; c-c++-enable-google-style t
-            c-c++-lsp-enable-semantic-highlight 'rainbow
-            c-c++-lsp-semantic-highlight-method 'overlay
-            ;; 2.4
-            c-c++-enable-clang-format-on-save t
-            ;; c-c++-enable-google-style t
-            ;; c-c++-enable-google-newline t
-            c-c++-enable-auto-newline t
-            c-c++-adopt-subprojects t
-            ;; c-c++-dap-adapters '(dap-gdb-lldb dap-lldb dap-cpptools)
-            c-c++-dap-adapters '(dap-cpptools)
-            )
-     ipython-notebook
-     )
+     ;; version-control
+     treemacs)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -164,24 +73,12 @@ This function should only modify configuration layer settings." ;
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages  '((copilot :location (recipe
-                                                           :fetcher github
-                                                           :repo "copilot-emacs/copilot.el"
-                                                           :files ("*.el")))
-
-                                       (lean4-mode :location(recipe
-                                                             :fetcher github
-                                                             :repo "leanprover/lean4-mode"
-                                                             :files ("*.el" "data")))
-
-                                       (cdlatex :location(recipe
+   dotspacemacs-additional-packages '(
+                                      (copilot :location (recipe
                                                           :fetcher github
-                                                          :repo "cdominik/cdlatex"
-                                                          :files ("*.el" "Makefile")))
-
-
-                                       )
-
+                                                          :repo "copilot-emacs/copilot.el"
+                                                          :files ("*.el")))
+                                      )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -197,7 +94,6 @@ This function should only modify configuration layer settings." ;
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only))
-
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -229,14 +125,6 @@ It should only modify the values of Spacemacs settings."
    ;;   ./emacs --dump-file=$HOME/.emacs.d/.cache/dumps/spacemacs-27.1.pdmp
    ;; (default (format "spacemacs-%s.pdmp" emacs-version))
    dotspacemacs-emacs-dumper-dump-file (format "spacemacs-%s.pdmp" emacs-version)
-
-   ;; If non-nil ELPA repositories are contacted via HTTPS whenever it's
-   ;; possible. Set it to nil if you have no way to use HTTPS in your
-   ;; environment, otherwise it is strongly recommended to let it set to t.
-   ;; This variable has no effect if Emacs is launched with the parameter
-   ;; `--insecure' which forces the value of this variable to nil.
-   ;; (default t)
-   dotspacemacs-elpa-https t
 
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    ;; (default 5)
@@ -296,7 +184,6 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   ;; dotspacemacs-startup-banner '"~/.spacemacs.d/GNUEmacs.png"
    dotspacemacs-startup-banner 'official
 
    ;; Scale factor controls the scaling (size) of the startup banner. Default
@@ -305,7 +192,6 @@ It should only modify the values of Spacemacs settings."
    ;; heights. If set to a number (int or float) it is used as a constant
    ;; scaling factor for the default logo size.
    dotspacemacs-startup-banner-scale 'auto
-   ;; dotspacemacs-startup-banner-scale '1
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -356,7 +242,10 @@ It should only modify the values of Spacemacs settings."
 
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
-   ;; with 2 themes variants, one dark and one light)
+   ;; with 2 themes variants, one dark and one light). A theme from external
+   ;; package can be defined with `:package', or a theme can be defined with
+   ;; `:location' to download the theme package, refer the themes section in
+   ;; DOCUMENTATION.org for the full theme specifications.
    dotspacemacs-themes '(spacemacs-dark
                          spacemacs-light)
 
@@ -373,49 +262,15 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   ;; Default font or prioritized list of fonts. The `:size' can be specified as
+   ;; Default font or prioritized list of fonts. This setting has no effect when
+   ;; running Emacs in terminal. The font set here will be used for default and
+   ;; fixed-pitch faces. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-
-
-
-
-   dotspacemacs-default-font (if (my/ubuntu-vm-science)
-                                 '("Ubuntu Mono"
-                                   :size 15.0
-                                   :weight normal
-                                   :width normal
-                                   )
-
-                               (if (or (my/ubuntu13700KF) (my/rmbp2018))
-                                   '("JetBrainsMono Nerd Font"
-                                     :size 20.0
-                                     :weight normal
-                                     :width normal
-                                     )
-
-                                 (if (my/nixos-vm)
-                                     '("DejaVu Sans Mono"
-                                       :size 20.0
-                                       :weight normal
-                                       :width normal
-                                       )
-
-                                   (if (my/rmbp2018EndeavourOS)
-                                       '("JetBrainsMono Nerd Font"
-                                         :size 15.0
-                                         :weight normal
-                                         :width normal
-                                         )
-
-                                     '("JetBrainsMono Nerd Font"
-                                       :size 15.0
-                                       :weight normal
-                                       :width normal
-                                       )
-
-                                     ))))
-   ;; (my/ubuntu-vm-science)
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 10.0
+                               :weight normal
+                               :width normal)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -504,6 +359,22 @@ It should only modify the values of Spacemacs settings."
    ;; displayed in the current window. (default nil)
    dotspacemacs-switch-to-buffer-prefers-purpose nil
 
+   ;; Whether side windows (such as those created by treemacs or neotree)
+   ;; are kept or minimized by `spacemacs/toggle-maximize-window' (SPC w m).
+   ;; (default t)
+   dotspacemacs-maximize-window-keep-side-windows t
+
+   ;; If nil, no load-hints enabled. If t, enable the `load-hints' which will
+   ;; put the most likely path on the top of `load-path' to reduce walking
+   ;; through the whole `load-path'. It's an experimental feature to speedup
+   ;; Spacemacs on Windows. Refer the FAQ.org "load-hints" session for details.
+   dotspacemacs-enable-load-hints nil
+
+   ;; If t, enable the `package-quickstart' feature to avoid full package
+   ;; loading, otherwise no `package-quickstart' attemption (default nil).
+   ;; Refer the FAQ.org "package-quickstart" section for details.
+   dotspacemacs-enable-package-quickstart nil
+
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
@@ -580,7 +451,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers 'relative
+   dotspacemacs-line-numbers nil
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -625,6 +496,13 @@ It should only modify the values of Spacemacs settings."
    ;; (default '("rg" "ag" "pt" "ack" "grep"))
    dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
 
+   ;; The backend used for undo/redo functionality. Possible values are
+   ;; `undo-fu', `undo-redo' and `undo-tree' see also `evil-undo-system'.
+   ;; Note that saved undo history does not get transferred when changing
+   ;; your undo system. The default is currently `undo-fu' as `undo-tree'
+   ;; is not maintained anymore and `undo-redo' is very basic."
+   dotspacemacs-undo-system 'undo-fu
+
    ;; Format specification for setting the frame title.
    ;; %a - the `abbreviated-file-name', or `buffer-name'
    ;; %t - `projectile-project-name'
@@ -660,6 +538,9 @@ It should only modify the values of Spacemacs settings."
    ;; to aggressively delete empty line and long sequences of whitespace,
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
+   ;; The variable `global-spacemacs-whitespace-cleanup-modes' controls
+   ;; which major modes have whitespace cleanup enabled or disabled
+   ;; by default.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
 
@@ -711,12 +592,6 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-
-  ;; (setq configuration-layer-elpa-archives
-  ;;     '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-  ;;       ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-  ;;       ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-
   )
 
 
@@ -734,29 +609,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
-  (setenv "PATH" (concat "$HOME/.nix-profile/bin:" (getenv "PATH")))
-
-  (setenv "PYTHONPATH" "/opt/ros/noetic/lib/python3/dist-packages")
-
-  (require 'dap-cpptools)
-
-  (add-hook 'prog-mode-hook 'my/disable-copilot-mode)
-  (add-hook 'latex-mode-hook 'my/enable-copilot-mode)
-  (add-hook 'latex-mode-hook 'my/enable-cdlatex-mode)
-
-
-  ;; toggle transparency
-  ;; (spacemacs/enable-background-transparency)
-  ;; (spacemacs/increase-background-transparency)
-  ;; (spacemacs/increase-background-transparency)
-  ;; (spacemacs/increase-background-transparency)
-  ;; (spacemacs/increase-background-transparency)
-
-
-
-
-
   (with-eval-after-load 'company
     ;; disable inline previews
     (delq 'company-preview-if-just-one-frontend company-frontends))
@@ -768,32 +620,9 @@ before packages are loaded."
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
 
   (add-hook 'prog-mode-hook 'copilot-mode)
-
-
-  (put 'narrow-to-page 'disabled nil)
+  (setq copilot-indent-offset-warning-disable t)
   )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(evil-want-Y-yank-to-eol nil)
-   '(package-selected-packages
-     '(add-node-modules-path import-js grizzl js-doc js2-refactor multiple-cursors livid-mode nodejs-repl npm-mode skewer-mode js2-mode tern yaml-mode ron-mode rustic rust-mode toml-mode blacken code-cells company-anaconda anaconda-mode counsel-gtags counsel swiper ivy cython-mode dap-mode lsp-docker bui ggtags helm-cscope helm-pydoc importmagic epc ctable concurrent deferred live-py-mode lsp-pyright lsp-python-ms nose pip-requirements pipenv load-env-vars pippel poetry py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv sphinx-doc stickyfunc-enhance xcscope yapfify cmake-mode yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here term-cursor symon symbol-overlay string-inflection string-edit-at-point spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline space-doc smeargle shell-pop restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-vterm multi-term multi-line markdown-toc macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-git-grep helm-descbinds helm-company helm-comint helm-c-yasnippet helm-ag google-translate golden-ratio gitignore-templates git-timemachine git-modes git-messenger git-link gh-md forge flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish diff-hl devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons aggressive-indent ace-link ace-jump-helm-line)))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
-  )
