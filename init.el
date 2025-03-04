@@ -50,15 +50,23 @@ This function should only modify configuration layer settings."
              python-fill-column 120
              python-sort-imports-on-save t
              )
+     (c-c++ :variables c-c++-backend 'lsp-ccls
+            c-c++-lsp-enable-semantic-highlight 'rainbow
+            c-c++-dap-adapters '(dap-cpptools dap-lldb )
+            c-c++-adopt-subprojects t
+            c-c++-enable-clang-format-on-save t
+            c-c++-enable-organize-includes-on-save t
+            )
+
      (shell-scripts :variables
-                      shell-scripts-backend 'lsp
-                      shell-scripts-format-on-save t
+                    shell-scripts-backend 'lsp
+                    shell-scripts-format-on-save t
                       )
 
      (latex :variables
-                      latex-backend 'lsp
-                      latex-format-on-save t
-                      latex-build-engine 'xetex
+            latex-backend 'lsp
+            latex-format-on-save t
+            latex-build-engine 'xetex
                       )
      (go :variables
          go-backend 'lsp
