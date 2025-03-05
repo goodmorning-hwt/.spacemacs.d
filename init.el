@@ -40,7 +40,10 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
-     ;; emacs-lisp
+
+     emacs-lisp
+     yaml
+     toml
      (nixos :variables
             nix-backend 'lsp
             nixos-format-on-save t)
