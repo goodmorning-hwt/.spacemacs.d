@@ -64,13 +64,13 @@ This function should only modify configuration layer settings."
      (shell-scripts :variables
                     shell-scripts-backend 'lsp
                     shell-scripts-format-on-save t
-                      )
+                    )
 
      (latex :variables
             latex-backend 'lsp
             latex-format-on-save t
             latex-build-engine 'xetex
-                      )
+            )
      (go :variables
          go-backend 'lsp
          go-tab-width 4
@@ -224,7 +224,8 @@ It should only modify the values of Spacemacs settings."
    ;; contents, to a maximum of the full image height and a minimum of 3 line
    ;; heights. If set to a number (int or float) it is used as a constant
    ;; scaling factor for the default logo size.
-   dotspacemacs-startup-banner-scale 'auto
+   ;; dotspacemacs-startup-banner-scale 'auto
+   dotspacemacs-startup-banner-scale 0.2
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -300,8 +301,8 @@ It should only modify the values of Spacemacs settings."
    ;; fixed-pitch faces. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 10.0
+   dotspacemacs-default-font '("0xProto Nerd Font"
+                               :size 13.0
                                :weight normal
                                :width normal)
 
